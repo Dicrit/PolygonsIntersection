@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -49,32 +50,25 @@ public class Lesson8_Gson
         Polygon[] pols;
         pols = gson.fromJson(line, Polygon[].class);
         System.out.println(Arrays.toString(pols));
-        
-        
-//        Point[] p = new Point[3];
-//        p[0]= new Point(-3,-1);
-//        p[1] = new Point(0,2);
-//        p[2] = new Point(3,-1);
-//        Polygon pol1 = new Polygon(p);
-//        Point[] p1 = new Point[3];
-//        p1[0]= new Point(-3,1);
-//        p1[1] = new Point(3,1);
-//        p1[2] = new Point(0,-2);
-//        Polygon pol2 = new Polygon(p1);
-        System.out.println(pols[0].getIntersection(pols[2]));
-        //System.out.println(pol1.getIntersection(pol2));
-////        System.out.println(pol1.getArea());
-////        System.out.println(pol2.getArea());
-//        for (Polygon p : pols) 
-//        {
-//            System.out.println(p);
-//        }
-
-//        Polygon p = new Polygon();
-//        p.verticles = new Point[]{new Point(1,1), new Point (2,2), new Point(0,0)};
-//        Polygon[] pols = new Polygon[]{p,p};
-        
-        //System.out.println(gson.toJson(pols));
+        ArrayList<Polygon> intersections = new ArrayList<>();
+        System.out.println(pols[2].getArea());
+        for (int i = 0; i < pols.length; i++)
+        {
+            for (int j = i; j < pols.length; j++) 
+            {
+                if (i == j) continue;
+                Polygon pol = pols[i].getIntersection(pols[j]);
+                if (pol.getVerticles().length != 0)
+                intersections.add(pol);
+            }
+        }
+        System.out.println(intersections);
+        float area = 0;
+        for (Polygon pol :intersections)
+        {
+            area += pol.getArea();
+        }
+        System.out.println(area);
     }
     
 }

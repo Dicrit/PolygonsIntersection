@@ -123,6 +123,7 @@ public class Polygon
         ArrayList<Point> pointsA = new ArrayList<>();
         ArrayList<Point> pointsB = new ArrayList<>();
         ArrayList<Point> intersections = new ArrayList<>();
+        boolean cycledB = false;
         for (int i = 0; i < verticles.length; i++)
         {
             pointsA.add(getPoint(i));
@@ -142,21 +143,43 @@ public class Polygon
         int indexA = 0;
         int indexB = 0;
         ArrayList<Point> points = new ArrayList<>();
+        if (intersections.size() > 0) {
+        while (true)
+            {
+                indexB++;
+                if (intersections.get(intersections.size() - 1).equals(pointsB.get(indexB)))
+                {
+                    indexB++;
+                    if (indexB >= pointsB.size()) 
+            {
+                indexB -= pointsB.size();
+                cycledB = true;
+            }
+                    break;
+                }
+            }
+        }
         for (Point p : intersections)
         {
-            System.out.println(points);
             while (!p.equals(pointsA.get(indexA)))
             {
             if (poly.isContainsPoint(pointsA.get(indexA))) points.add(pointsA.get(indexA));
             indexA++;
             }
             indexA++;
+            
             while (!p.equals(pointsB.get(indexB)))
             {
             if (this.isContainsPoint(pointsB.get(indexB))) points.add(pointsB.get(indexB));
             indexB++;
+            if (indexB >= pointsB.size()) 
+            {
+                indexB -= pointsB.size();
+                cycledB = true;
+            }
             }
             indexB++;
+            
             points.add(p);
         }
         while (indexA < pointsA.size())
@@ -164,11 +187,13 @@ public class Polygon
             if (poly.isContainsPoint(pointsA.get(indexA))) points.add(pointsA.get(indexA));
             indexA++;
             }
+        if(!cycledB){
             while (indexB < pointsB.size())
             {
             if (this.isContainsPoint(pointsB.get(indexB))) points.add(pointsB.get(indexB));
             indexB++;
             }
+        }
         
 //        ArrayList<Point> back = new ArrayList<>();
 //        for (Point p : points) 
@@ -178,74 +203,11 @@ public class Polygon
         return new Polygon(points.toArray(new Point[0]));
     }
     
-//    public Polygon getItersection(Polygon poly) 
-//    {
-//        ArrayList<Point> points = new ArrayList<>();
-//        Point start;
-//        Point current;
-//        Polygon main;
-//        Polygon subsidiary;
-//        int index;
-//        if (getPointInside(poly) != -1) 
-//        {
-//            System.out.println("First");
-//            index = getPointInside(poly);
-//            System.out.println(index);
-//            main = poly;
-//            subsidiary = this;
-//            start = poly.getVerticles()[index];
-//            current = start;
-//            points.add(poly.getVerticles()[index]);
-//        }
-//        else if (poly.getPointInside(this) != -1)
-//        {
-//            index = getPointInside(poly);
-//            main = this;
-//            subsidiary = poly;
-//            points.add(getVerticles()[index]);
-//            start = getVerticles()[index];
-//            current = start;
-//            System.out.println("Second");
-//        }
-//        else
-//        {
-//            index = 0;
-//            //isIts = true;
-//            main = this;
-//            subsidiary = poly;
-//            start = verticles[0];
-//            current = start;
-//            System.out.println("Third");
-//        }
-////        System.out.println("start:"+start);
-////        System.out.println("index:"+index);
-//        while(true)
-//        {
-//            Subpoint sub = FindIntersection(current, main.getPoint(index+1), subsidiary);
-//            if (sub == null) 
-//            {
-//                points.add(main.getPoint(index+1));
-//                index++;
-//                current = main.getPoint(index);
-//            }
-//            else
-//            {
-//                points.add(sub.point);
-//                Polygon temporary = main;
-//                main = subsidiary;
-//                subsidiary = temporary;
-//                index = sub.index;
-//                current  = sub.point;
-//                //index = sub.index+1;
-//            }
-//            if (main.getPoint(index) == start)
-//            {
-//             Point[] arr = points.toArray(new Point[0]);
-//             return new Polygon(arr);
-//            }
-//        }
-//    }
-    public float getArea() 
+
+    public float getArea() {
+        return Math.abs(Area());
+    }
+    private float Area() 
     {
         float area = 0;
         int left, right;
