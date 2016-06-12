@@ -6,6 +6,7 @@
 package lesson8_gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -35,7 +36,7 @@ public class Polygon
         if (index < 0) return getPoint(index + verticles.length);
         return verticles[index];
     }
-    public boolean isContainsPoint(Point p)
+    private boolean isContainsPoint(Point p)
     {
         int counter = 0;
         for (int i = 0; i < verticles.length; i++) 
@@ -67,16 +68,8 @@ public class Polygon
         
         return counter % 2 == 1;
     }
-    public int getPointInside(Polygon poly) {
-        for (int i =0; i < poly.getVerticles().length; i++) 
-        {
-            if (isContainsPoint(poly.getVerticles()[i])) return i;
-        }
-        return -1;
-    }
-    public static Point getIntersectionPoint(Point p0, Point p1, Point p2, Point p3)
+    private static Point getIntersectionPoint(Point p0, Point p1, Point p2, Point p3)
     {
-        
         float k1 = (p1.y-p0.y)/(p1.x-p0.x);
         float b1 = p0.y - k1*p0.x;
         float k2 = (p3.y-p2.y)/(p3.x-p2.x);
@@ -108,16 +101,12 @@ public class Polygon
             if (p != null)
             {
                 points.add(p);
-            //sub.points.add(p);
-            //sub.index = i;
             }
         }
         Collections.sort(points);
         if (p1.x > p2.x) Collections.reverse(points);
-        //sub.sort(getPoint(index).x < getPoint(index+1).x);
         return points;
     }
-    
     public Polygon getIntersection (Polygon poly)
     {
         ArrayList<Point> pointsA = new ArrayList<>();
@@ -134,7 +123,7 @@ public class Polygon
                 intersections.add(p);
             }
         }
-        for (int i = 0; i < poly.getVerticles().length; i++)
+        for (int i = 0; i < poly.verticles.length; i++)
         {
             pointsB.add(poly.getPoint(i));
             ArrayList<Point> ps = FindIntersections(poly.getPoint(i), poly.getPoint(i+1), this);
@@ -201,9 +190,7 @@ public class Polygon
 //            if (poly.isContainsPoint(p)) back.add(p);
 //        }
         return new Polygon(points.toArray(new Point[0]));
-    }
-    
-
+    }    
     public float getArea() {
         return Math.abs(Area());
     }

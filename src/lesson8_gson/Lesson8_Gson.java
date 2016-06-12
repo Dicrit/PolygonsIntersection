@@ -30,28 +30,24 @@ public class Lesson8_Gson
         try
         {
             lines = Files.readAllLines(
-                    Paths.get("D:\\downloads/JsonDZ/poligons.json")
+                    Paths.get("D://downloads/JsonDZ/poligons.json")
                     , Charset.defaultCharset());
-            lines.size();
         }
         catch (IOException ex)
         {
             System.out.println(ex.getMessage());
+            return;
         }
-        //System.out.println(lines);
         String line = "";
         for (String s : lines) 
         {
             line += s;
         }
-        //System.out.println(line);
-        
         Gson gson = new Gson();
         Polygon[] pols;
         pols = gson.fromJson(line, Polygon[].class);
-        System.out.println(Arrays.toString(pols));
+        System.out.println(String.format("polygons from file are %s",Arrays.toString(pols)));
         ArrayList<Polygon> intersections = new ArrayList<>();
-        System.out.println(pols[2].getArea());
         for (int i = 0; i < pols.length; i++)
         {
             for (int j = i; j < pols.length; j++) 
@@ -62,13 +58,12 @@ public class Lesson8_Gson
                 intersections.add(pol);
             }
         }
-        System.out.println(intersections);
+        System.out.println(String.format("This is intersections %s",intersections));
         float area = 0;
         for (Polygon pol :intersections)
         {
             area += pol.getArea();
         }
-        System.out.println(area);
+        System.out.println(String.format("Total area is %f",area));
     }
-    
 }
