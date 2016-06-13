@@ -24,9 +24,8 @@ public class Lesson8_Gson
      * @param args the command line arguments
      */
     public static void main(String[] args)
-    {
-        
-            List<String> lines = null;
+    {        
+        List<String> lines;
         try
         {
             lines = Files.readAllLines(
@@ -46,9 +45,9 @@ public class Lesson8_Gson
         Gson gson = new Gson();
         Polygon[] pols;
         pols = gson.fromJson(line, Polygon[].class);
-        System.out.println(String.format("polygons from file are %s",Arrays.toString(pols)));
+        System.out.println(String.format("polygons from file are %s",Arrays.toString(pols)));//checkout polygons
         ArrayList<Polygon> intersections = new ArrayList<>();
-        for (int i = 0; i < pols.length; i++)
+        for (int i = 0; i < pols.length; i++) //find intersections
         {
             for (int j = i; j < pols.length; j++) 
             {
@@ -59,10 +58,11 @@ public class Lesson8_Gson
             }
         }
         System.out.println(String.format("This is intersections %s",intersections));
-        float area = 0;
+        float area = 0; //calculate area
         for (Polygon pol :intersections)
         {
             area += pol.getArea();
+            
         }
         System.out.println(String.format("Total area is %f",area));
     }

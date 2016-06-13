@@ -5,8 +5,6 @@
  */
 package lesson8_gson;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
-
 /**
  *
  * @author E4300
@@ -25,6 +23,11 @@ public class Point implements Comparable<Point>
     {
         return "("+x+";"+y+")";
     }
+    /**
+     * 
+     * @param p another point
+     * @return true if current point is greater than second. (compares firstly x's, than y's)
+     */
     public boolean moreThan(Point p) 
     {
         return x > p.x || x == p.x && y > p.y;
