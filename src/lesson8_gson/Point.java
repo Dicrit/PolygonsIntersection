@@ -11,8 +11,8 @@ package lesson8_gson;
  */
 public class Point implements Comparable<Point>
 {
-        public float x;
-        public float y;
+        public final float x;
+        public final float y;
         public Point(float a, float b)
         {
         x = a;
